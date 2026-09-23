@@ -7,6 +7,7 @@ import {
   Ambulance,
   ArrowRight,
   Bird,
+  BookOpen,
   CalendarDays,
   Cat,
   Check,
@@ -60,6 +61,14 @@ type Pet = {
   weight: string;
 };
 
+type VaccinationRecord = {
+  id: string;
+  title: string;
+  vaccine: string;
+  date: string;
+  status: 'Внесено' | 'Нужно обновить';
+};
+
 type OrderStatus = 'Поиск ветеринара' | 'Подтверждён' | 'В пути' | 'Врач прибыл' | 'Приём' | 'Завершён' | 'Отменён';
 
 type Order = {
@@ -99,6 +108,16 @@ const initialOrders: Order[] = [
   { id: 'VH-2384', serviceId: 'exam', petId: 'bars', address: 'ул. Тверская, 18', time: '24 мая, 18:00', date: '24 мая', status: 'Завершён', createdAt: '2024-05-24' },
 ];
 
+const vaccinationRecords: Record<string, VaccinationRecord[]> = {
+  marta: [
+    { id: 'marta-complex', title: 'Комплексная вакцинация', vaccine: 'Nobivac Tricat Trio', date: '12 июня 2024', status: 'Внесено' },
+    { id: 'marta-rabies', title: 'Бешенство', vaccine: 'Nobivac Rabies', date: '12 июня 2024', status: 'Внесено' },
+  ],
+  bars: [
+    { id: 'bars-rabies', title: 'Бешенство', vaccine: 'Рабиген', date: '24 мая 2024', status: 'Внесено' },
+  ],
+};
+
 function formatGreeting() {
   const hour = new Date().getHours();
   if (hour < 5) return 'Доброй ночи';
@@ -113,6 +132,7 @@ function AppShell({ children }: { children: ReactNode }) {
     { href: '/', label: 'Главная', icon: HomeIcon },
     { href: '/services', label: 'Услуги', icon: Sparkles },
     { href: '/history', label: 'История', icon: HistoryIcon },
+    { href: '/passport', label: 'Ветпаспорт', icon: BookOpen },
     { href: '/profile', label: 'Профиль', icon: UserRound },
   ];
   return (
@@ -130,13 +150,13 @@ function AppShell({ children }: { children: ReactNode }) {
       </header>
       <main className="safe-bottom px-4 pb-28 pt-5 sm:px-6">{children}</main>
       <nav className="safe-nav fixed bottom-0 left-1/2 z-30 w-full max-w-[760px] -translate-x-1/2 border-t border-[#e8e0d3] bg-[#fbf8f2]/95 px-3 pt-2 shadow-[0_-8px_24px_rgba(37,83,64,.06)] backdrop-blur-xl">
-        <div className="mx-auto flex max-w-md items-center justify-around">
+        <div className="mx-auto grid max-w-md grid-cols-5 items-center">
           {items.map(({ href, label, icon: Icon }) => {
             const active = location === href;
               return (
-                <Link key={href} href={href} className={`flex min-w-[66px] flex-col items-center gap-1 rounded-2xl px-3 py-2 text-[11px] font-medium transition-all active:scale-95 ${active ? 'bg-[#e1efe1] text-[#1b5a48]' : 'text-[#829087]'}`} data-testid={`link-nav-${label}`}>
+                <Link key={href} href={href} className={`flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[10px] font-medium outline-none transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-[#79a98a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fbf8f2] ${active ? 'bg-[#e1efe1] text-[#1b5a48]' : 'text-[#829087]'}`} data-testid={`link-nav-${label}`}>
                 <Icon size={19} strokeWidth={active ? 2.3 : 1.8} />
-                <span>{label}</span>
+                <span className="whitespace-nowrap">{label}</span>
               </Link>
             );
           })}
@@ -374,6 +394,109 @@ function ProfilePage({ pets, setPets }: { pets: Pet[]; setPets: (pets: Pet[]) =>
   </div>;
 }
 
+function VetPassportPage({ pets }: { pets: Pet[] }) {
+  const [selectedPetId, setSelectedPetId] = useState(pets[0]?.id || '');
+  const selectedPet = pets.find((pet) => pet.id === selectedPetId) || pets[0];
+  const records = selectedPet ? vaccinationRecords[selectedPet.id] || [] : [];
+
+  if (!selectedPet) {
+    return (
+      <div className="mx-auto max-w-2xl animate-rise">
+        <div className="mb-6">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">Документы питомца</p>
+          <h1 className="mt-1 font-serif text-[38px] leading-none tracking-[-0.035em] text-[#17493f]">Ветпаспорт</h1>
+        </div>
+        <div className="rounded-[28px] border border-dashed border-[#cbd6c8] bg-[#f1f5ed] px-6 py-14 text-center">
+          <BookOpen className="mx-auto text-[#4d876d]" size={34} strokeWidth={1.6} />
+          <p className="mt-4 font-serif text-2xl text-[#27584b]">Добавьте питомца</p>
+          <p className="mx-auto mt-2 max-w-xs text-sm leading-5 text-[#7c8e83]">Здесь будут храниться прививки и важные записи о здоровье.</p>
+          <Link href="/profile" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1f5a4a] px-5 py-3 text-sm font-bold text-[#f8f5ec]">Открыть профиль <ArrowRight size={16} /></Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-2xl animate-rise">
+      <div className="mb-6 flex items-end justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">Документы питомца</p>
+          <h1 className="mt-1 font-serif text-[38px] leading-none tracking-[-0.035em] text-[#17493f]">Ветпаспорт</h1>
+        </div>
+        <span className="rounded-full bg-[#e2efe1] px-3 py-2 text-[10px] font-bold text-[#357660]">Электронный</span>
+      </div>
+
+      <section className="relative overflow-hidden rounded-[28px] bg-[#1f5a4a] p-5 text-[#f8f5ec] shadow-[0_18px_34px_rgba(23,73,63,.16)]">
+        <div className="absolute -right-10 -top-14 h-40 w-40 rounded-full border-[18px] border-[#83ba8b]/20" />
+        <div className="absolute -bottom-16 left-16 h-36 w-36 rounded-full bg-[#83ba8b]/10" />
+        <div className="relative">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <PetAvatar type={selectedPet.type} />
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#a9ccb1]">Пациент</p>
+                <h2 className="mt-1 font-serif text-3xl leading-none">{selectedPet.name}</h2>
+                <p className="mt-2 text-xs text-[#c5ddc8]">{selectedPet.type} · {selectedPet.breed}</p>
+              </div>
+            </div>
+            <ShieldCheck className="text-[#b8dcb6]" size={25} strokeWidth={1.5} />
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-3 border-t border-[#4d816d] pt-4">
+            <div><p className="text-[10px] uppercase tracking-[0.12em] text-[#a9ccb1]">Возраст</p><p className="mt-1 text-sm font-semibold">{selectedPet.age}</p></div>
+            <div><p className="text-[10px] uppercase tracking-[0.12em] text-[#a9ccb1]">Вес</p><p className="mt-1 text-sm font-semibold">{selectedPet.weight}</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-7">
+        <SectionHeading eyebrow="Ваши любимцы" title="Выберите питомца" />
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          {pets.map((pet) => (
+            <button key={pet.id} onClick={() => setSelectedPetId(pet.id)} className={`flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#79a98a] ${selectedPet.id === pet.id ? 'border-[#78aa8b] bg-[#e2efe1] text-[#2d6c56]' : 'border-[#e7e1d6] bg-[#fffdf8] text-[#829087]'}`} data-testid={`button-passport-pet-${pet.id}`}>
+              <PetAvatar type={pet.type} small />
+              {pet.name}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-7">
+        <div className="mb-3 flex items-end justify-between">
+          <div>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">Профилактика</p>
+            <h2 className="font-serif text-[29px] leading-none tracking-[-0.03em] text-[#17493f]">Прививки</h2>
+          </div>
+          <span className="text-xs font-semibold text-[#6f8679]">{records.length} {records.length === 1 ? 'запись' : 'записи'}</span>
+        </div>
+        {records.length ? (
+          <div className="space-y-3">
+            {records.map((record) => (
+              <div key={record.id} className="flex items-center gap-3 rounded-[22px] border border-[#e9e2d6] bg-[#fffdf8] p-3.5">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#e5f0e4] text-[#36745f]"><Syringe size={19} /></span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-[#28594c]">{record.title}</p>
+                  <p className="mt-1 text-xs text-[#849188]">{record.vaccine} · {record.date}</p>
+                </div>
+                <span className="rounded-full bg-[#e3f1e3] px-2 py-1 text-[10px] font-bold text-[#4f8068]">{record.status}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-[22px] border border-dashed border-[#d5d9cd] bg-[#f6f4ed] px-5 py-8 text-center">
+            <p className="font-serif text-2xl text-[#27584b]">Записей пока нет</p>
+            <p className="mt-1 text-sm text-[#86948b]">После визита врача они появятся здесь.</p>
+          </div>
+        )}
+      </section>
+
+      <Link href="/order" className="mt-7 flex items-center justify-between rounded-[24px] bg-[#f3c76e] px-5 py-4 text-sm font-bold text-[#17493f] transition-transform active:scale-[.99]" data-testid="link-passport-book-visit">
+        <span>Обновить данные после визита</span>
+        <ArrowRight size={18} />
+      </Link>
+    </div>
+  );
+}
+
 function InfoRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return <div className="flex items-center gap-3 py-4"><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#e8f1e6] text-[#3b765f]"><Icon size={16} /></span><span className="flex-1"><span className="block text-[11px] text-[#95a198]">{label}</span><span className="mt-0.5 block text-sm font-semibold text-[#28594c]">{value}</span></span><ChevronRight size={16} className="text-[#b3bdb4]" /></div>;
 }
@@ -385,7 +508,7 @@ function Router() {
   useEffect(() => { localStorage.setItem('vethome-pets', JSON.stringify(pets)); }, [pets]);
   useEffect(() => { localStorage.setItem('vethome-orders', JSON.stringify(orders)); }, [orders]);
   const createOrder = (order: Order) => setOrders((current) => [order, ...current]);
-  return <AppShell><RoutedErrorBoundary><Switch><Route path="/" component={() => <HomePage setPendingService={setPendingService} orders={orders} pets={pets} />} /><Route path="/services" component={() => <ServicesPage setPendingService={setPendingService} />} /><Route path="/order" component={() => <OrderPage pets={pets} pendingService={pendingService} setPendingService={setPendingService} onCreateOrder={createOrder} />} /><Route path="/history" component={() => <HistoryPage orders={orders} pets={pets} />} /><Route path="/profile" component={() => <ProfilePage pets={pets} setPets={setPets} />} /><Route component={NotFound} /></Switch></RoutedErrorBoundary></AppShell>;
+  return <AppShell><RoutedErrorBoundary><Switch><Route path="/" component={() => <HomePage setPendingService={setPendingService} orders={orders} pets={pets} />} /><Route path="/services" component={() => <ServicesPage setPendingService={setPendingService} />} /><Route path="/order" component={() => <OrderPage pets={pets} pendingService={pendingService} setPendingService={setPendingService} onCreateOrder={createOrder} />} /><Route path="/history" component={() => <HistoryPage orders={orders} pets={pets} />} /><Route path="/passport" component={() => <VetPassportPage pets={pets} />} /><Route path="/profile" component={() => <ProfilePage pets={pets} setPets={setPets} />} /><Route component={NotFound} /></Switch></RoutedErrorBoundary></AppShell>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
