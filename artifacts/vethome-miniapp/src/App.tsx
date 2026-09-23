@@ -149,14 +149,14 @@ function AppShell({ children }: { children: ReactNode }) {
         </Link>
       </header>
       <main className="safe-bottom px-4 pb-28 pt-5 sm:px-6">{children}</main>
-      <nav className="safe-nav fixed bottom-0 left-1/2 z-30 w-full max-w-[760px] -translate-x-1/2 border-t border-[#e8e0d3] bg-[#fbf8f2]/95 px-3 pt-2 shadow-[0_-8px_24px_rgba(37,83,64,.06)] backdrop-blur-xl">
+      <nav className="safe-nav fixed bottom-0 left-1/2 z-30 w-full max-w-[760px] -translate-x-1/2 border-t border-[#dfe9dc] bg-[#fffdf8]/98 px-2 pt-2.5 shadow-[0_-10px_28px_rgba(37,83,64,.1)] backdrop-blur-xl">
         <div className="mx-auto grid max-w-md grid-cols-5 items-center">
           {items.map(({ href, label, icon: Icon }) => {
             const active = location === href;
               return (
-                <Link key={href} href={href} className={`flex min-w-0 flex-col items-center gap-1 rounded-2xl px-1 py-2 text-[10px] font-medium outline-none transition-all active:scale-95 focus-visible:ring-2 focus-visible:ring-[#79a98a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fbf8f2] ${active ? 'bg-[#e1efe1] text-[#1b5a48]' : 'text-[#829087]'}`} data-testid={`link-nav-${label}`}>
-                <Icon size={19} strokeWidth={active ? 2.3 : 1.8} />
-                <span className="whitespace-nowrap">{label}</span>
+                <Link key={href} href={href} aria-current={active ? 'page' : undefined} className={`flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-[20px] px-1 py-2 text-[11px] font-semibold outline-none transition-[transform,background-color,color,box-shadow] duration-200 ease-out active:scale-95 focus-visible:ring-2 focus-visible:ring-[#79a98a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffdf8] ${active ? 'bg-[#dcefe0] text-[#175b46] shadow-[0_5px_16px_rgba(61,126,88,.16)]' : 'text-[#62776b] hover:bg-[#f1f6ef] hover:text-[#2d6b55]'}`} data-testid={`link-nav-${label}`}>
+                <Icon className={active ? 'nav-icon-active' : ''} size={active ? 22 : 20} strokeWidth={active ? 2.4 : 1.9} />
+                <span className={active ? 'nav-label-active whitespace-nowrap' : 'whitespace-nowrap'}>{label}</span>
               </Link>
             );
           })}
