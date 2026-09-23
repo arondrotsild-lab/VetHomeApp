@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "VethomeAPP — Telegram Mini App"
+description = "A Telegram Mini App for Veterinar At Home, bringing veterinary services, trusted doctors, pet profiles, and order tracking into one polished mobile-first experience."
+version = "1.0.0"
+id = "artifacts/vethome-miniapp"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21197
+
+[services.development]
+run = "pnpm --filter @workspace/vethome-miniapp run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vethome-miniapp", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vethome-miniapp/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21197"
+BASE_PATH = "/"
