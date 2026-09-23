@@ -118,11 +118,10 @@ function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell min-h-[100dvh]">
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-[#e8e0d3]/80 bg-[#f7f3ec]/85 px-5 py-3.5 backdrop-blur-xl">
-        <Link href="/" className="flex items-center gap-2.5" data-testid="link-brand">
-          <img src="/logo.jpeg" alt="Ветеринар на дом" className="h-10 w-10 rounded-full object-cover ring-2 ring-[#d6e8d6]" data-testid="img-logo" />
+        <Link href="/" className="flex items-center gap-3" data-testid="link-brand">
+          <img src="/logo.jpeg" alt="Ветеринар на дом" className="h-14 w-14 rounded-full object-cover ring-2 ring-[#d6e8d6]" data-testid="img-logo" />
           <div>
-            <p className="font-semibold leading-none tracking-[-0.03em] text-[#17493f]">Ветеринар на дом</p>
-            <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.16em] text-[#769184]">VethomeAPP</p>
+            <p className="text-base font-bold leading-none tracking-[-0.03em] text-[#17493f]">Ветеринар на дом</p>
           </div>
         </Link>
         <Link href="/profile" aria-label="Открыть профиль" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e5f0e4] text-[#276554] transition-transform active:scale-95" data-testid="link-profile-header">
@@ -254,7 +253,7 @@ function ServicesPage({ setPendingService }: { setPendingService: (id: string | 
   return (
     <div className="mx-auto max-w-2xl animate-rise">
       <div className="mb-6 flex items-start justify-between">
-        <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">VethomeAPP</p><h1 className="mt-1 font-serif text-[38px] leading-none tracking-[-0.035em] text-[#17493f]">Все услуги</h1></div>
+        <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">Ветеринар на дом</p><h1 className="mt-1 font-serif text-[38px] leading-none tracking-[-0.035em] text-[#17493f]">Все услуги</h1></div>
         <div className="rounded-full bg-[#e2efe1] px-3 py-2 text-[11px] font-bold text-[#357660]">13 услуг</div>
       </div>
       <div className="flex items-center gap-2 rounded-2xl border border-[#e6dfd4] bg-[#fbf8f2] px-4 py-3">
