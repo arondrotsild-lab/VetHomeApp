@@ -187,8 +187,8 @@ function HomePage({ setPendingService, orders, pets }: { setPendingService: (id:
   return (
     <div className="mx-auto max-w-2xl animate-rise">
       <section className="relative isolate overflow-hidden rounded-[28px] bg-[#1c5648] px-5 pb-6 pt-6 text-[#f7f5ed] shadow-[0_18px_36px_rgba(23,73,63,.18)]">
-        <img src="/vet-home-visit-hero.jpg" alt="Ветеринар осматривает питомца дома" className="absolute inset-0 h-full w-full object-cover object-[72%_50%] opacity-95" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,80,66,.98)_0%,rgba(24,80,66,.91)_43%,rgba(24,80,66,.42)_100%)]" />
+        <img src="/vet-home-visit-hero.jpg" alt="Ветеринар осматривает питомца дома" className="absolute inset-0 h-full w-full object-cover object-[72%_50%] brightness-125 saturate-125" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,80,66,.82)_0%,rgba(24,80,66,.52)_43%,rgba(24,80,66,.08)_100%)]" />
         <div className="absolute -right-12 -top-14 h-44 w-44 rounded-full border-[18px] border-[#72ae7d]/25" />
         <div className="absolute -bottom-20 left-16 h-44 w-44 rounded-full bg-[#6ca97a]/10" />
         <div className="relative z-10">
