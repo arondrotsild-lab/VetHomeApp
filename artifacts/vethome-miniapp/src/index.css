@@ -154,7 +154,7 @@
   backdrop-filter: blur(10px);
 }
 
-.safe-bottom { padding-bottom: max(6.5rem, calc(6.5rem + env(safe-area-inset-bottom))); }
+.safe-bottom { padding-bottom: max(8rem, calc(8rem + env(safe-area-inset-bottom))); }
 .safe-nav { padding-bottom: env(safe-area-inset-bottom); }
 
 @media (min-width: 768px) {

@@ -129,7 +129,7 @@ function AppShell({ children }: { children: ReactNode }) {
         </Link>
       </header>
       <main className="safe-bottom px-4 pb-28 pt-5 sm:px-6">{children}</main>
-      <nav className="safe-nav fixed bottom-0 left-0 right-0 z-30 border-t border-[#e8e0d3] bg-[#fbf8f2]/95 px-3 pt-2 shadow-[0_-8px_24px_rgba(37,83,64,.06)] backdrop-blur-xl md:absolute md:mx-auto md:max-w-[760px]">
+      <nav className="safe-nav fixed bottom-0 left-1/2 z-30 w-full max-w-[760px] -translate-x-1/2 border-t border-[#e8e0d3] bg-[#fbf8f2]/95 px-3 pt-2 shadow-[0_-8px_24px_rgba(37,83,64,.06)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-md items-center justify-around">
           {items.map(({ href, label, icon: Icon }) => {
             const active = location === href;
@@ -264,9 +264,9 @@ function ServicesPage({ setPendingService }: { setPendingService: (id: string | 
       <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
         {['Все', 'Популярное', 'Срочно'].map((item) => <button key={item} onClick={() => setFilter(item)} className={`whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold transition-colors ${filter === item ? 'bg-[#1f5a4a] text-[#f8f5ec]' : 'bg-[#ebe9df] text-[#77877d]'}`} data-testid={`button-filter-${item}`}>{item}</button>)}
       </div>
-      <div className="mt-5 space-y-3">
+      <div className="mt-5 grid gap-3 md:grid-cols-2">
         {filtered.map((service, index) => <ServiceRow key={service.id} service={service} index={index} onClick={() => setDetail(service)} />)}
-        {filtered.length === 0 && <div className="rounded-[24px] border border-dashed border-[#d5d9cd] bg-[#f6f4ed] px-6 py-12 text-center"><Search className="mx-auto text-[#7b9c89]" size={30} /><p className="mt-3 font-serif text-2xl text-[#27584b]">Ничего не нашли</p><p className="mt-1 text-sm text-[#86948b]">Попробуйте другое название услуги.</p></div>}
+        {filtered.length === 0 && <div className="rounded-[24px] border border-dashed border-[#d5d9cd] bg-[#f6f4ed] px-6 py-12 text-center md:col-span-2"><Search className="mx-auto text-[#7b9c89]" size={30} /><p className="mt-3 font-serif text-2xl text-[#27584b]">Ничего не нашли</p><p className="mt-1 text-sm text-[#86948b]">Попробуйте другое название услуги.</p></div>}
       </div>
       {detail && <ServiceDetail service={detail} onClose={() => setDetail(null)} onChoose={() => { setPendingService(detail.id); setDetail(null); setLocation('/order'); }} />}
     </div>
