@@ -147,6 +147,17 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes nav-shell-pop {
+  0% { transform: scale(.82); }
+  65% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes nav-dot-in {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 .animate-rise { animation: rise-in .55s cubic-bezier(.2,.8,.2,1) both; }
 .animate-rise-delay-1 { animation-delay: .06s; }
 .animate-rise-delay-2 { animation-delay: .12s; }
@@ -154,6 +165,8 @@
 .animate-pulse-soft { animation: pulse-soft 2.2s ease-in-out infinite; }
 .nav-icon-active { animation: nav-icon-pop .42s cubic-bezier(.2,.8,.2,1) both; }
 .nav-label-active { animation: nav-label-in .3s ease-out both; }
+.nav-icon-shell-active { animation: nav-shell-pop .42s cubic-bezier(.2,.8,.2,1) both; }
+.nav-active-dot { animation: nav-dot-in .3s .12s ease-out both; }
 
 .app-shell {
   background:
@@ -171,7 +184,7 @@
 .safe-nav { padding-bottom: env(safe-area-inset-bottom); }
 
 @media (prefers-reduced-motion: reduce) {
-  .nav-icon-active, .nav-label-active { animation: none; }
+  .nav-icon-active, .nav-label-active, .nav-icon-shell-active, .nav-active-dot { animation: none; }
 }
 
 @media (min-width: 768px) {

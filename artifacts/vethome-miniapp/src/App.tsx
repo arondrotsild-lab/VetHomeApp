@@ -149,14 +149,17 @@ function AppShell({ children }: { children: ReactNode }) {
         </Link>
       </header>
       <main className="safe-bottom px-4 pb-28 pt-5 sm:px-6">{children}</main>
-      <nav className="safe-nav fixed bottom-0 left-1/2 z-30 w-full max-w-[760px] -translate-x-1/2 border-t border-[#dfe9dc] bg-[#fffdf8]/98 px-2 pt-2.5 shadow-[0_-10px_28px_rgba(37,83,64,.1)] backdrop-blur-xl">
+      <nav className="safe-nav fixed bottom-2 left-1/2 z-30 w-[calc(100%-1rem)] max-w-[760px] -translate-x-1/2 rounded-[26px] border border-[#d8e5d7] bg-[#fffdf8]/96 px-2 pt-2 shadow-[0_10px_30px_rgba(37,83,64,.16)] backdrop-blur-xl">
         <div className="mx-auto grid max-w-md grid-cols-5 items-center">
           {items.map(({ href, label, icon: Icon }) => {
             const active = location === href;
               return (
-                <Link key={href} href={href} aria-current={active ? 'page' : undefined} className={`flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-[20px] px-1 py-2 text-[11px] font-semibold outline-none transition-[transform,background-color,color,box-shadow] duration-200 ease-out active:scale-95 focus-visible:ring-2 focus-visible:ring-[#79a98a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffdf8] ${active ? 'bg-[#dcefe0] text-[#175b46] shadow-[0_5px_16px_rgba(61,126,88,.16)]' : 'text-[#62776b] hover:bg-[#f1f6ef] hover:text-[#2d6b55]'}`} data-testid={`link-nav-${label}`}>
-                <Icon className={active ? 'nav-icon-active' : ''} size={active ? 22 : 20} strokeWidth={active ? 2.4 : 1.9} />
+                <Link key={href} href={href} aria-current={active ? 'page' : undefined} className={`relative flex min-h-[62px] min-w-0 flex-col items-center justify-center gap-1 rounded-[20px] px-1 py-1.5 text-[11px] font-bold outline-none transition-[transform,background-color,color,box-shadow] duration-200 ease-out active:scale-95 focus-visible:ring-2 focus-visible:ring-[#79a98a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fffdf8] ${active ? 'text-[#175b46]' : 'text-[#64796d] hover:bg-[#f1f6ef] hover:text-[#2d6b55]'}`} data-testid={`link-nav-${label}`}>
+                <span className={`flex h-9 w-9 items-center justify-center rounded-[14px] transition-[transform,background-color,color,box-shadow] duration-200 ${active ? 'nav-icon-shell-active bg-[#2d725b] text-[#fffdf8] shadow-[0_5px_12px_rgba(45,114,91,.28)]' : 'bg-transparent text-[#64796d]'}`}>
+                  <Icon className={active ? 'nav-icon-active' : ''} size={active ? 21 : 20} strokeWidth={active ? 2.5 : 2} />
+                </span>
                 <span className={active ? 'nav-label-active whitespace-nowrap' : 'whitespace-nowrap'}>{label}</span>
+                {active && <span className="nav-active-dot absolute bottom-0.5 h-1 w-1 rounded-full bg-[#f3c76e]" aria-hidden="true" />}
               </Link>
             );
           })}
