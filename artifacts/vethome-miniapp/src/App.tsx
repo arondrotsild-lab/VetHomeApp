@@ -186,30 +186,41 @@ function HomePage({ setPendingService, orders, pets }: { setPendingService: (id:
   const quickServices = services.slice(0, 4);
   return (
     <div className="mx-auto max-w-2xl animate-rise">
-      <section className="relative isolate overflow-hidden rounded-[28px] bg-[#1c5648] px-5 pb-6 pt-6 text-[#f7f5ed] shadow-[0_18px_36px_rgba(23,73,63,.18)]">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold text-[#7d9285]">{formatGreeting()}, Мария</p>
+          <h1 className="mt-0.5 text-[21px] font-bold tracking-[-0.03em] text-[#17493f]">Как помочь питомцу?</h1>
+        </div>
+        <Link href="/passport" className="flex shrink-0 items-center gap-2 rounded-2xl border border-[#dce7d9] bg-[#edf5eb] px-3 py-2.5 text-[11px] font-bold text-[#2d6b55] shadow-[0_4px_12px_rgba(37,83,64,.05)] transition-transform active:scale-95" data-testid="link-home-passport">
+          <BookOpen size={17} strokeWidth={2} />
+          <span>Ветпаспорт</span>
+        </Link>
+      </div>
+
+      <section className="relative isolate min-h-[238px] overflow-hidden rounded-[26px] bg-[#1c5648] px-5 pb-5 pt-5 text-[#f7f5ed] shadow-[0_16px_30px_rgba(23,73,63,.16)]">
         <img src="/vet-home-visit-hero.jpg" alt="Ветеринар осматривает питомца дома" className="absolute inset-0 h-full w-full object-cover object-[72%_50%] brightness-125 saturate-125" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,80,66,.82)_0%,rgba(24,80,66,.52)_43%,rgba(24,80,66,.08)_100%)]" />
         <div className="absolute -right-12 -top-14 h-44 w-44 rounded-full border-[18px] border-[#72ae7d]/25" />
         <div className="absolute -bottom-20 left-16 h-44 w-44 rounded-full bg-[#6ca97a]/10" />
         <div className="relative z-10">
-          <p className="text-sm font-medium text-[#bedac1]">{formatGreeting()}, Мария</p>
-          <h1 className="mt-2 max-w-[290px] font-serif text-[39px] leading-[.92] tracking-[-0.035em]">Забота приходит домой.</h1>
-          <p className="mt-4 max-w-[310px] text-sm leading-5 text-[#d7e9d7]">Профессиональная скорая ветеринарная помощь без очередей и стресса для питомца.</p>
-          <button onClick={() => { setPendingService('urgent'); setLocation('/order'); }} className="mt-5 flex items-center gap-2 rounded-full bg-[#f3c76e] px-4 py-2.5 text-sm font-bold text-[#17493f] transition-transform active:scale-95" data-testid="button-urgent-home">
+          <p className="inline-flex rounded-full bg-[#f6f4e9]/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#d7e9d7]">Ветеринарная помощь дома</p>
+          <h2 className="mt-3 max-w-[250px] font-serif text-[34px] leading-[.94] tracking-[-0.035em]">Забота приходит домой.</h2>
+          <p className="mt-3 max-w-[270px] text-[13px] leading-5 text-[#e0eee0]">Без очередей и стресса — врач приедет к вам и поможет питомцу.</p>
+          <button onClick={() => { setPendingService('urgent'); setLocation('/order'); }} className="mt-4 flex items-center gap-2 rounded-full bg-[#f3c76e] px-4 py-2.5 text-sm font-bold text-[#17493f] shadow-[0_5px_16px_rgba(117,83,24,.18)] transition-transform active:scale-95" data-testid="button-urgent-home">
             Нужен врач сейчас <ArrowRight size={16} />
           </button>
         </div>
       </section>
 
-      <section className="mt-6">
+      <section className="mt-5">
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">Ваши визиты</p>
-            <h2 className="mt-1 font-serif text-[29px] leading-none tracking-[-0.03em] text-[#17493f]">Всё под контролем</h2>
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8a9a8e]">Ближайший визит</p>
+            <h2 className="mt-1 font-serif text-[26px] leading-none tracking-[-0.03em] text-[#17493f]">Всё под контролем</h2>
           </div>
-          <Link href="/history" className="flex h-9 w-9 items-center justify-center rounded-full border border-[#ded9cb] text-[#357660] transition-colors active:bg-[#e8f2e7]" data-testid="link-history-home"><ArrowRight size={17} /></Link>
+          <Link href="/history" className="rounded-full px-2 py-1 text-xs font-bold text-[#357660] transition-colors active:bg-[#e8f2e7]" data-testid="link-history-home">Все визиты</Link>
         </div>
-        <div className="paper-card rounded-[22px] border border-[#ebe3d7] p-4">
+        <Link href="/history" className="paper-card block rounded-[22px] border border-[#ebe3d7] p-4 transition-transform active:scale-[.99]" data-testid="link-visit-card">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e3f1e2] text-[#2e755e]"><CalendarDays size={20} /></div>
             <div className="min-w-0 flex-1">
@@ -222,27 +233,27 @@ function HomePage({ setPendingService, orders, pets }: { setPendingService: (id:
           </div>
           <div className="mt-4 flex items-center justify-between border-t border-[#eee8dd] pt-3 text-xs">
             <span className="flex items-center gap-1.5 text-[#728479]"><MapPin size={14} /> ул. Тверская, 18</span>
-            <Link href="/history" className="font-bold text-[#31745f]" data-testid="link-visit-details">Подробнее</Link>
+            <span className="flex items-center gap-1 font-bold text-[#31745f]">Подробнее <ChevronRight size={14} /></span>
           </div>
-        </div>
+        </Link>
       </section>
 
-      <section className="mt-7">
-        <SectionHeading eyebrow="Помощь рядом" title="Что нужно питомцу?" action="Все услуги" onAction={() => setLocation('/services')} />
+      <section className="mt-6">
+        <SectionHeading eyebrow="Быстрый доступ" title="Помощь питомцу" action="Все услуги" onAction={() => setLocation('/services')} />
         <div className="grid grid-cols-2 gap-3">
           {quickServices.map((service, index) => <ServiceTile key={service.id} service={service} index={index} onSelect={() => { setPendingService(service.id); setLocation('/order'); }} />)}
         </div>
       </section>
 
-      <section className="mt-7">
-        <div className="relative overflow-hidden rounded-[24px] bg-[#e5efe4] p-5">
+      <section className="mt-6">
+        <div className="relative overflow-hidden rounded-[22px] bg-[#e5efe4] p-4">
           <div className="relative z-10 max-w-[60%]">
             <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#59806c]">Наша команда</p>
-            <h2 className="mt-2 font-serif text-[27px] leading-[.95] tracking-[-0.03em] text-[#1e5949]">Врач, которому можно доверять</h2>
-            <p className="mt-3 text-xs leading-5 text-[#5e7869]">Знакомьтесь с Анной — ветеринаром с 9-летним опытом.</p>
-            <Link href="/profile" className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[#2d705b]" data-testid="link-vet-profile">Познакомиться <ArrowRight size={14} /></Link>
+            <h2 className="mt-2 font-serif text-[24px] leading-[.95] tracking-[-0.03em] text-[#1e5949]">Врач, которому можно доверять</h2>
+            <p className="mt-2 text-xs leading-5 text-[#5e7869]">Анна — ветеринар с 9-летним опытом.</p>
+            <Link href="/profile" className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#2d705b]" data-testid="link-vet-profile">Познакомиться <ArrowRight size={14} /></Link>
           </div>
-          <img src="/demo-vet-anna.jpg" alt="Ветеринар Анна" className="absolute -bottom-2 -right-3 h-44 w-40 rounded-t-[80px] object-cover object-top" data-testid="img-vet-anna" />
+          <img src="/demo-vet-anna.jpg" alt="Ветеринар Анна" className="absolute -bottom-2 -right-3 h-36 w-32 rounded-t-[70px] object-cover object-top" data-testid="img-vet-anna" />
         </div>
       </section>
     </div>
@@ -252,7 +263,7 @@ function HomePage({ setPendingService, orders, pets }: { setPendingService: (id:
 function ServiceTile({ service, index, onSelect }: { service: Service; index: number; onSelect: () => void }) {
   const Icon = service.icon;
   return (
-    <button onClick={onSelect} className={`animate-rise animate-rise-delay-${Math.min(index + 1, 3)} group flex min-h-[132px] flex-col justify-between rounded-[22px] border border-[#e9e2d6] p-4 text-left transition-transform active:scale-[.98] ${service.tone === 'mint' ? 'bg-[#e3f1e3]' : service.tone === 'butter' ? 'bg-[#fbefd0]' : service.tone === 'coral' ? 'bg-[#f8ddd5]' : 'bg-[#e9e3f3]'}`} data-testid={`button-service-tile-${service.id}`}>
+    <button onClick={onSelect} className={`animate-rise animate-rise-delay-${Math.min(index + 1, 3)} group flex min-h-[112px] flex-col justify-between rounded-[20px] border border-[#e9e2d6] p-3.5 text-left transition-transform active:scale-[.98] ${service.tone === 'mint' ? 'bg-[#e3f1e3]' : service.tone === 'butter' ? 'bg-[#fbefd0]' : service.tone === 'coral' ? 'bg-[#f8ddd5]' : 'bg-[#e9e3f3]'}`} data-testid={`button-service-tile-${service.id}`}>
       <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#fffaf1]/75 text-[#286551]"><Icon size={18} strokeWidth={1.8} /></span>
       <span><span className="block text-sm font-bold leading-4 text-[#26594b]">{service.name}</span><span className="mt-1 block text-[11px] font-medium text-[#70847a]">{service.duration}</span></span>
     </button>
