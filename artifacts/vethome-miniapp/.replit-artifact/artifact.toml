@@ -1,5 +1,5 @@
 kind = "web"
-previewPath = "/"
+previewPath = "/vethome-miniapp/"
 title = "Ветеринар на дом"
 description = "Профессиональная ветеринарная помощь у вас дома: услуги, врачи, питомцы и заявки в одном приложении."
 version = "1.0.0"
@@ -8,7 +8,7 @@ router = "path"
 
 [[services]]
 name = "web"
-paths = [ "/" ]
+paths = [ "/vethome-miniapp/" ]
 localPort = 21197
 
 [services.development]
@@ -25,4 +25,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "21197"
-BASE_PATH = "/"
+BASE_PATH = "/vethome-miniapp/"

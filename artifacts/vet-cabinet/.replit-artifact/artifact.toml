@@ -1,5 +1,5 @@
 kind = "web"
-previewPath = "/vet-cabinet/"
+previewPath = "/"
 title = "Кабинет ветеринара"
 description = "Оригинальное приложение из репозитория veterinarathomeveterinar — кабинет ветеринара с заказами, профилем и рейтингом."
 version = "1.0.0"
@@ -8,7 +8,7 @@ router = "path"
 
 [[services]]
 name = "web"
-paths = [ "/vet-cabinet/" ]
+paths = [ "/" ]
 localPort = 24233
 
 [services.development]
@@ -25,4 +25,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "24233"
-BASE_PATH = "/vet-cabinet/"
+BASE_PATH = "/"
