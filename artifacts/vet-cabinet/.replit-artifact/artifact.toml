@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/vet-cabinet/"
+title = "Кабинет ветеринара"
+description = "Оригинальное приложение из репозитория veterinarathomeveterinar — кабинет ветеринара с заказами, профилем и рейтингом."
+version = "1.0.0"
+id = "artifacts/vet-cabinet"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/vet-cabinet/" ]
+localPort = 24233
+
+[services.development]
+run = "pnpm --filter @workspace/vet-cabinet run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vet-cabinet", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vet-cabinet/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24233"
+BASE_PATH = "/vet-cabinet/"
